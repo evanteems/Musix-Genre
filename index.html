@@ -14,12 +14,13 @@
             <strong>Welcome to the Musix WikiFinder. Please search up any lyrics, artists, or song titles you wish to find!</strong>
             <div class="field has-addons">
                 <div class="control">
-                  <input class="input"  type="text" placeholder="Find music here!">
-                </div>
-                <div class="control">
-                  <a class="button is-active">
-                    Search
-                  </a>
+                  <form class="search-form js-search-form">
+                  <input type="text" placeholder="Find music here!" type="search" class="search-input js-search-input input" autofocus>
+                  <button id="search" class="button is-active">Search</button>
+                    <div class="loading-indicator">
+                      <div class="sk-chase js-spinner hidden"></div>
+                    </div>
+                    <section class="search-results js-search-results"></section>
                 </div>
             </div>
         </div>
