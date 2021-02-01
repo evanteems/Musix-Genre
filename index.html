@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-    <link rel="stylesheet" src="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
     <title>Welcome to the Musix WikiFinder</title>
 </head>
 <body>
@@ -16,12 +16,12 @@
               <div class="field has-addons">
                 <div class="control">
                   <form class="search-form js-search-form">
-                  <input type="text" placeholder="Find music here!" type="search" class="search-input js-search-input input" autofocus>
+                  <input type="text" placeholder="Find music here!" type="search" class="search-input js-search-input input" autofocus style="width: 50%;">
                   <button id="search" class="button is-black">Search</button>
                   <div class="loading-indicator">
                       <div class="sk-chase js-spinner hidden"></div>
                   </div>
-                    <section class="search-results js-search-results"></section>
+                    <section class="search-results js-search-results" style="font-size: large;"></section>
                 </div>
             </div>
         </div>
@@ -33,15 +33,15 @@
     <script src="./assets/js/script.js"></script>
 </body>
 
-<footer class="footer">
+<footer class="footer" style="padding: 0%;" style="margin-top: 0px;" style="width: 100%">
   <div class="block">
     <div class="field has-addons">
-      <div class="control">
+      <div class="control" style="width: 100%">
         <div class="notification is-success">
           <div class="box">
-            <!--<footer class="footer">-->
+            <div class="content has-text-centered">
                 <h1 class="title is-3">Copyright 2021 Evan, Albert, Kevin, and Gabriel!!</h1>
-            <!--</footer>-->
+            </div>
           </div>
         </div>
       </div>
