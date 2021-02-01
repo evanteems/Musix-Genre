@@ -5,19 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <link rel="stylesheet" src="./assets/css/style.css">
-    <title>Welcome to the Musix WikiFinder</title>
+    <title>Welcome to the Musix Lyrics</title>
 </head>
 <body>
     <header class="hero">
       <div class="block">
-        <div class="notification is-info">
-            <h1 class="title is-1">Musix WikiFinder</h1>
-            <strong>Welcome to the Musix WikiFinder. Please search up any lyrics, artists, or song titles you wish to find!</strong>
+        <div class="notification is-success">
+            <h1 class="title is-1" style="color: black;">Musix Lyrics</h1>
+            <strong style="color: black;">Welcome to the Musix Lyrics. Please search up any lyrics, artists, or song titles you wish to find!</strong>
             <div class="field has-addons">
                 <div class="control">
                   <form class="search-form js-search-form">
-                  <input type="text" placeholder="Find music here!" type="search" class="search-input js-search-input input" autofocus>
-                  <button id="search" class="button is-active">Search</button>
+                  <input type="text" placeholder="Find music here!" type="search" class="search-input js-search-input input" style="width: 50%;" autofocus>
+                  <button id="search" class="button is-black">Search</button>
                     <div class="loading-indicator">
                       <div class="sk-chase js-spinner hidden"></div>
                     </div>
@@ -32,15 +32,17 @@
       </main>
     <script src="./assets/js/script.js"></script>
 </body>
-<div class="field has-addons">
-    <div class="control">
-        <div class="notification is-info">
+<footer class="footer" style="padding: 0%;" style="margin-top: 0px;">
+  <div class="field has-addons">
+    <div class="control" style="width: 100%;">
+        <div class="notification is-success">
           <div class="box">
-            <footer class="footer">
-                <h1 class="title is-3">Copyright 2021 Evan, Albert, Kevin, and Gabriel!!</h1>
-            </footer>
+            <div class="content has-text-centered">         
+              <h1 class="title is-5" style="color: black;">Copyright 2021 Evan, Albert, Kevin, and Gabriel!!</h1>
+            </div>
           </div>
         </div>
     </div>
-</div>
+  </div>
+</footer>
 </html>
