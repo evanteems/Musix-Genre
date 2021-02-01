@@ -14,13 +14,20 @@
             <strong>Welcome to the Musix WikiFinder. Please search up any lyrics, artists, or song titles you wish to find!</strong>
             <div class="field has-addons">
                 <div class="control">
-                  <form class="search-form js-search-form">
-                  <input type="text" placeholder="Find music here!" type="search" class="search-input js-search-input input" autofocus>
-                  <button id="search" class="button is-active">Search</button>
-                    <div class="loading-indicator">
-                      <div class="sk-chase js-spinner hidden"></div>
+                  <form id="form">
+                    <div class="form-group"> 
+                    <input type="text" placeholder="Find music here!" type="search" class="form-control input" id="search">
                     </div>
-                    <section class="search-results js-search-results"></section>
+                    <div class="form-group">
+                      <input type="submit" class="btn" value="search">
+                    </div>
+                  </form >
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div id="video">
+                      </div>
+                    </div>
+                  </div>
                 </div>
             </div>
         </div>
@@ -29,6 +36,7 @@
       <main>
         
       </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="./assets/js/script.js"></script>
 </body>
 <div class="field has-addons">
