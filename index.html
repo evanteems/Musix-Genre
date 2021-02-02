@@ -8,7 +8,7 @@
     <link rel="stylesheet" src="./assets/css/style.css">
     <title>Welcome to the Musix Lyrics</title>
 </head>
-<body style="background: url(./images/Musix.jpg) fixed center;">
+<body>
     <header class="hero" style="text-align: center;">
       <div class="block">
         <div class="notification is-success" style="background:url(./images/Musix.jpg) fixed center;">
@@ -16,16 +16,22 @@
             <strong style="color: purple;">Welcome to the Musix Lyrics! Please search up any lyrics, artists, or song titles you wish to find!</strong>
             <div class="field has-addons">
               <div class="control">
-                <form id="form">
+                <form class="search-form js-search-form" onsubmit="return false">>
                   <div class="form-group" style="text-align: center;"> 
-                    <input type="text" placeholder="Find music here!" type="search" class="form-control input" id="search" style="width: 50%;">
-                    <button class="button is-black">Search</button>
+                    <input type="search" placeholder="Find music here!" name="q" class="search-input js-search-input input" id="search" style="width: 50%;" autofocus>
+                  </div>
+                  <div class="form-group">
+                    <input type="radio" name="search" value="artist" id="ArtistRadioButton" checked>Artist
+                    <input type="radio" name="search" value="song" id="songRadioButton">Song
                   </div>
                   <div class="form-group">
                     <div class="level-right">
-                    
+                      <button class="btn-srch" onclick="checkRadio()">Search</button>
+                    <button class="btn-clear" onclick="resetPage()">Clear Results</button>
                     </div>
                   </div>
+                 
+                 </form> 
                 </form >
                 <div class="row">
                   <div class="col-md-12">
@@ -35,11 +41,20 @@
                     </div>
                   </div>
                </div>
-              </div>
+             </div>
           </div>
        </div>
     </header>
-      <main style="min-height: 660px;">
+      <main>
+        <section class="search-results js-search-results">
+          <div class="row">
+            <table id="back-button" class="table results"></table>
+        </div>
+        <div class="row">
+            <table id="results" class="table results">
+            </table>
+        </div>
+        </section>
         
       </main>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -48,10 +63,10 @@
 <footer class="footer" style="padding: 0%;" style="margin-top: 0px;">
   <div class="field has-addons">
     <div class="control" style="width: 100%;">
-        <div class="notification" style="background: url(./images/Musix.jpg) fixed center;">
-          <div class="box" style="background: url(./images/Musix.jpg) fixed center;">
+        <div class="notification is-dark">
+          <div class="box">
             <div class="content has-text-centered">         
-              <h1 class="title is-4" style="color: purple;">Copyright 2021 Evan, Albert, Kevin, and Gabriel!!</h1>
+              <h1 class="title is-5" style="color: black;">Copyright 2021 Evan, Albert, Kevin, and Gabriel!!</h1>
             </div>
           </div>
         </div>
