@@ -10,22 +10,22 @@
 </head>
 <body>
     <header class="hero" style="text-align: center;">
-      <div class="block">
-        <div class="notification is-success" style="background:url(./images/Musix.jpg) fixed center;">
+      <div class="block" style="min-width: 0%;">
+        <div class="notification" style="background: url(./images/Musix.jpg) fixed center;">
             <h1 class="title is-1" style="color: purple">Musix Lyrics</h1>
             <strong style="color: purple;">Welcome to the Musix Lyrics! Please search up any lyrics, artists, or song titles you wish to find!</strong>
-            <div class="field has-addons">
+            <div class="field" style="padding-left: 500px; padding-right: 500px;">
               <div class="control">
                 <form class="search-form" onsubmit="return false">
-                  <div class="form-group" style="text-align: center;"> 
-                    <input type="search" placeholder="Find music here!" name="q" class="search-input input" id="search" style="width: 50%;" autofocus>
+                  <div class="form-group"> 
+                    <input type="search" placeholder="Find music here!" name="q" class="search-input input" id="search" autofocus>
                   </div>
                   <div class="form-group">
                     <input type="radio" name="search" value="artist" id="ArtistRadioButton" checked>Artist
                     <input type="radio" name="search" value="song" id="songRadioButton">Song
                   </div>
                   <div class="form-group">
-                    <div class="level-right">
+                    <div class="level-right" style="padding-right: 350px;">
                       <button class="btn-srch" onclick="checkRadio()">Search</button>
                     <button class="btn-clear" onclick="resetPage()">Clear Results</button>
                     </div>
@@ -42,27 +42,28 @@
              </div>
           </div>
        </div>
+      </div> 
     </header>
-      <main>
-        <section class="search-results">
-          <div class="row">
+      <main style="min-height: 640px; background: url(./images/Musix.jpg) fixed center;">
+        <section class="search-results" style="background: url(./images/Musix.jpg) fixed center;">
+          <div class="row" style="background: url(./images/Musix.jpg) fixed center;">
             <table id="back-button" class="table results"></table>
         </div>
         <div class="row">
-            <table id="results" class="table results">
+            <table id="results" class="table results" style="background: url(./images/Musix.jpg) fixed center; text-emphasis-color: purple;">
             </table>
         </div>
         </section>
         
       </main>
 
-<footer class="footer" style="padding: 0%;" style="margin-top: 0px;">
+<footer class="footer" style="padding: 0%; background: url(./images/Musix.jpg) fixed center;">
   <div class="field has-addons">
     <div class="control" style="width: 100%;">
-        <div class="notification is-dark">
-          <div class="box">
-            <div class="content has-text-centered">         
-              <h1 class="title is-5" style="color: black;">Copyright 2021 Evan, Albert, Kevin, and Gabriel!!</h1>
+        <div class="notification" style="background: url(./images/Musix.jpg) fixed center;">
+          <div class="box" style="background: url(./images/Musix.jpg) fixed center;">
+            <div class="content has-text-centered" style="background: url(./images/Musix.jpg) fixed center;">         
+              <h1 class="title is-5" style="color: purple;">Copyright 2021 Evan, Albert, Kevin, and Gabriel!!</h1>
             </div>
           </div>
         </div>
