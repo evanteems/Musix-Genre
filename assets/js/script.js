@@ -2,6 +2,9 @@ let SearchTerms;
 let SongID;
 let ResultsSection = document.getElementById('results');
 let BackButton = document.getElementById('back-button');
+let api_Key = "AIzaSyBElNgf8IN6XlOh7RzTdzE_DfEnNXGjBDI";
+let display= "";
+
 
 //runs when the user clicks on the search button
 function checkRadio() {
@@ -26,7 +29,7 @@ function getSong() {
     resetPage();
     $.ajax({type: "GET",
             data: {
-                apikey: "8d3f1f67ffdc20bd27b54239c58249f0",
+                apikey: "d246a1705459f6af7bcc9ca194674583",
                 q_track: SearchTerms, //searches by song name
                 format: "jsonp",
                 callback: "jsonp_callback",
@@ -75,6 +78,23 @@ function getSong() {
             },
         }
     );
+
+        $("body").on("click", '.btn-result', function (event) {
+            alert("test");
+            event.preventDefault();
+            let youSearch = (item.track.artist_name + item.track.track_id);
+            videoSearch(api_Key, youSearch,1)
+        })
+    
+        function videoSearch(key,video,maxVideo) {
+            $.get("https://www.googleapis.com/youtube/v3/search?key="+key+"&type=video&part=snippet&maxResults="+maxVideo+"&q="+video,function(data){
+                
+                data.items.forEach(item => {
+                    video=`<iframe width="560" height="315" src="https://www.youtube.com/embed/${item.id.videoId}" frameborder="0" allowfullscreen></iframe>`
+                });
+                $("#video").append(video);
+            })
+        }    
 }
 
 //If 'artist' radio button is selected:
@@ -83,7 +103,7 @@ function getArtist() {
     $.ajax({
             type: "GET",
             data: {
-                apikey: "8d3f1f67ffdc20bd27b54239c58249f0",
+                apikey: "d246a1705459f6af7bcc9ca194674583",
                 q_artist: SearchTerms, //queries by artist name
                 format: "jsonp",
                 callback: "jsonp_callback",
@@ -98,6 +118,7 @@ function getArtist() {
             contentType: 'application/json',
             success: function(data) {
                 let artistResults = data.message.body.artist_list;
+                console.log(data);
                 ResultsSection.innerHTML += `<thead>
                                                 <tr>
                                                   <th>Artist Name</th>
@@ -134,6 +155,7 @@ function getArtist() {
         }
 
     );
+    
 }
 
 //gets lyrics when song is selected
@@ -153,7 +175,7 @@ function getLyrics(SongID, goBack) {
     $.ajax({
         type: "GET",
         data: {
-            apikey: "8d3f1f67ffdc20bd27b54239c58249f0",
+            apikey: "d246a1705459f6af7bcc9ca194674583",
             track_id: SongID, //ID of the song
             format: "jsonp",
             callback: "jsonp_callback",
@@ -170,7 +192,7 @@ function getLyrics(SongID, goBack) {
             $.ajax({
                 type: "GET",
                 data: {
-                    apikey: "8d3f1f67ffdc20bd27b54239c58249f0",
+                    apikey: "d246a1705459f6af7bcc9ca194674583",
                     track_id: SongID, //ID of the song
                     format: "jsonp",
                     callback: "jsonp_callback",
@@ -241,7 +263,7 @@ function getAlbumList(artistID) {
     $.ajax({
             type: "GET",
             data: {
-                apikey: "8d3f1f67ffdc20bd27b54239c58249f0",
+                apikey: "d246a1705459f6af7bcc9ca194674583",
                 artist_id: artistID, //unique ID of the specified artist
                 format: "jsonp",
                 callback: "jsonp_callback",
@@ -303,7 +325,7 @@ function getSongList(albumID) {
     $.ajax({
             type: "GET",
             data: {
-                apikey: "8d3f1f67ffdc20bd27b54239c58249f0",
+                apikey: "d246a1705459f6af7bcc9ca194674583",
                 album_id: albumID, //unique ID of the specified album
                 format: "jsonp",
                 callback: "jsonp_callback",
@@ -358,26 +380,22 @@ function getSongList(albumID) {
 
 
 
-let apiKey = "AIzaSyBElNgf8IN6XlOh7RzTdzE_DfEnNXGjBDI";
-let display= "";
 
-$(document).ready(function () {
-    $("#form").submit(function (event) {
-        event.preventDefault();
-        let youSearch = $("#search").val();
-        videoSearch(apiKey, youSearch,2)
-    })
 
-    function videoSearch(key,video,maxVideo) {
-        $.get("https://www.googleapis.com/youtube/v3/search?key="+key+"&type=video&part=snippet&maxResults="+maxVideo+"&q="+video,function(data){
+// $(document).ready(function () {
+//     $("#form").submit(function (event) {
+//         event.preventDefault();
+//         let youSearch = $("#search").val();
+//         videoSearch(apiKey, youSearch,2)
+//     })
+
+//     function videoSearch(key,video,maxVideo) {
+//         $.get("https://www.googleapis.com/youtube/v3/search?key="+key+"&type=video&part=snippet&maxResults="+maxVideo+"&q="+video,function(data){
             
-            data.items.forEach(item => {
-                video=`<iframe width="560" height="315" src="https://www.youtube.com/embed/${item.id.videoId}" frameborder="0" allowfullscreen></iframe>`
-            });
-            $("#video").append(video);
-        })
-    }
-
-
-
-})
+//             data.items.forEach(item => {
+//                 video=`<iframe width="560" height="315" src="https://www.youtube.com/embed/${item.id.videoId}" frameborder="0" allowfullscreen></iframe>`
+//             });
+//             $("#video").append(video);
+//         })
+//     }
+// })
