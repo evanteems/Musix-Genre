@@ -2,6 +2,9 @@ let SearchTerms;
 let SongID;
 let ResultsSection = document.getElementById('results');
 let BackButton = document.getElementById('back-button');
+let api_Key = "AIzaSyCdEPu6GK83lhXpfTuFAJtGyAdH0C23r-M";
+let display= "";
+
 
 //runs when the user clicks on the search button
 function checkRadio() {
@@ -26,7 +29,7 @@ function getSong() {
     resetPage();
     $.ajax({type: "GET",
             data: {
-                apikey: "8d3f1f67ffdc20bd27b54239c58249f0",
+                apikey: "d246a1705459f6af7bcc9ca194674583",
                 q_track: SearchTerms, //searches by song name
                 format: "jsonp",
                 callback: "jsonp_callback",
@@ -40,6 +43,7 @@ function getSong() {
             contentType: 'application/json',
             success: function(data) {
                 let songResults = data.message.body.track_list;
+                console.log(data);
                 ResultsSection.innerHTML += `<thead>
                                                 <tr>
                                                   <th>Songs</th>
@@ -53,11 +57,10 @@ function getSong() {
                                                         <td>${item.track.track_name}</td>
                                                         <td>${item.track.artist_name}</td>
                                                         <td>
-                                                            <button class="btn-result" onclick="getLyrics(${item.track.track_id}, 'getSong')">Click here for lyrics/Youtube</button>
+                                                            <button class="btn-result" onclick="getLyrics(${item.track.track_id},'getSong','${item.track.artist_name}','${item.track.track_name}')">Click here for lyrics/Youtube</button>
                                                         </td>
                                                     </tr>
                                                 </tbody>`;
-
                 });
                 if (songResults.length === 0) {
                     resetPage(); //clears the table header above
@@ -72,9 +75,13 @@ function getSong() {
                                                     </tr>
                                                 </tbody>`;
                 }
+                
             },
         }
     );
+
+
+        
 }
 
 //If 'artist' radio button is selected:
@@ -83,7 +90,7 @@ function getArtist() {
     $.ajax({
             type: "GET",
             data: {
-                apikey: "8d3f1f67ffdc20bd27b54239c58249f0",
+                apikey: "d246a1705459f6af7bcc9ca194674583",
                 q_artist: SearchTerms, //queries by artist name
                 format: "jsonp",
                 callback: "jsonp_callback",
@@ -98,6 +105,7 @@ function getArtist() {
             contentType: 'application/json',
             success: function(data) {
                 let artistResults = data.message.body.artist_list;
+                console.log(data);
                 ResultsSection.innerHTML += `<thead>
                                                 <tr>
                                                   <th>Artist Name</th>
@@ -109,7 +117,7 @@ function getArtist() {
                                                         <tr>
                                                         <td>${item.artist.artist_name}</td>
                                                         <td>
-                                                            <button class="btn-result" onclick="getAlbumList(${item.artist.artist_id})">Click here for a list of albums</button>
+                                                            <button class="btn-result" onclick="getAlbumList(${item.artist.artist_id},'${item.artist.artist_name}')">Click here for a list of albums</button>
                                                         </td>
                                                     </tr>
                                                 </tbody>`;
@@ -134,10 +142,13 @@ function getArtist() {
         }
 
     );
+    
 }
 
 //gets lyrics when song is selected
-function getLyrics(SongID, goBack) {
+function getLyrics(SongID, goBack, artist_name, track_name) {
+    let youSearch = (artist_name + track_name );
+    videoSearch(youSearch,1)
     resetPage();
     let songName;
 
@@ -153,7 +164,7 @@ function getLyrics(SongID, goBack) {
     $.ajax({
         type: "GET",
         data: {
-            apikey: "8d3f1f67ffdc20bd27b54239c58249f0",
+            apikey: "d246a1705459f6af7bcc9ca194674583",
             track_id: SongID, //ID of the song
             format: "jsonp",
             callback: "jsonp_callback",
@@ -170,7 +181,7 @@ function getLyrics(SongID, goBack) {
             $.ajax({
                 type: "GET",
                 data: {
-                    apikey: "8d3f1f67ffdc20bd27b54239c58249f0",
+                    apikey: "d246a1705459f6af7bcc9ca194674583",
                     track_id: SongID, //ID of the song
                     format: "jsonp",
                     callback: "jsonp_callback",
@@ -241,7 +252,7 @@ function getAlbumList(artistID) {
     $.ajax({
             type: "GET",
             data: {
-                apikey: "8d3f1f67ffdc20bd27b54239c58249f0",
+                apikey: "d246a1705459f6af7bcc9ca194674583",
                 artist_id: artistID, //unique ID of the specified artist
                 format: "jsonp",
                 callback: "jsonp_callback",
@@ -303,7 +314,7 @@ function getSongList(albumID) {
     $.ajax({
             type: "GET",
             data: {
-                apikey: "8d3f1f67ffdc20bd27b54239c58249f0",
+                apikey: "d246a1705459f6af7bcc9ca194674583",
                 album_id: albumID, //unique ID of the specified album
                 format: "jsonp",
                 callback: "jsonp_callback",
@@ -327,8 +338,9 @@ function getSongList(albumID) {
                     ResultsSection.innerHTML += `<tbody>
                                                     <tr>
                                                         <td>${item.track.track_name}</td>
+                                                        <td>${item.track.artist_name}</td>
                                                         <td>
-                                                            <button class="btn-result" onclick="getLyrics(${item.track.track_id}, 'getSongList')">Click here for lyrics</button>
+                                                            <button class="btn-result" onclick="getLyrics(${item.track.track_id}, 'getSongList','${item.track.artist_name}','${item.track.track_name}')">Click here for lyrics</button>
                                                         </td>
                                                     </tr>
                                                 </tbody>`;
@@ -355,29 +367,39 @@ function getSongList(albumID) {
 }
 
 
+    // let youSearch = (item.track.artist_name + item.track.track_id);
+    // videoSearch(youSearch,1)
 
 
-
-let apiKey = "AIzaSyBElNgf8IN6XlOh7RzTdzE_DfEnNXGjBDI";
-let display= "";
-
-$(document).ready(function () {
-    $("#form").submit(function (event) {
-        event.preventDefault();
-        let youSearch = $("#search").val();
-        videoSearch(apiKey, youSearch,2)
+function videoSearch(video,maxVideo) {
+    $.get("https://www.googleapis.com/youtube/v3/search?key="+api_Key+"&type=video&part=snippet&maxResults="+maxVideo+"&q="+video,function(data){
+        
+        data.items.forEach(item => {
+            video=`<iframe width="560" height="315" src="https://www.youtube.com/embed/${item.id.videoId}" frameborder="0" allowfullscreen></iframe>`
+        });
+        $("#video").append(video);
     })
+}   
 
-    function videoSearch(key,video,maxVideo) {
-        $.get("https://www.googleapis.com/youtube/v3/search?key="+key+"&type=video&part=snippet&maxResults="+maxVideo+"&q="+video,function(data){
+
+
+
+
+
+// $(document).ready(function () {
+//     $("#form").submit(function (event) {
+//         event.preventDefault();
+//         let youSearch = $("#search").val();
+//         videoSearch(apiKey, youSearch,2)
+//     })
+
+//     function videoSearch(key,video,maxVideo) {
+//         $.get("https://www.googleapis.com/youtube/v3/search?key="+key+"&type=video&part=snippet&maxResults="+maxVideo+"&q="+video,function(data){
             
-            data.items.forEach(item => {
-                video=`<iframe width="560" height="315" src="https://www.youtube.com/embed/${item.id.videoId}" frameborder="0" allowfullscreen></iframe>`
-            });
-            $("#video").append(video);
-        })
-    }
-
-
-
-})
+//             data.items.forEach(item => {
+//                 video=`<iframe width="560" height="315" src="https://www.youtube.com/embed/${item.id.videoId}" frameborder="0" allowfullscreen></iframe>`
+//             });
+//             $("#video").append(video);
+//         })
+//     }
+// })
