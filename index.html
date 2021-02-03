@@ -5,34 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-    <link rel="stylesheet" src="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
     <title>Welcome to the Musix Lyrics</title>
 </head>
 <body>
     <header class="hero" style="text-align: center;">
-      <div class="block" style="min-width: 0%;">
+      <div class="block" style="min-width: 0%; background: url(./images/Musix.jpg) fixed center; ">
         <div class="notification" style="background: url(./images/Musix.jpg) fixed center;">
-            <h1 class="title is-1" style="color: purple">Musix Lyrics</h1>
-            <strong style="color: purple;">Welcome to the Musix Lyrics! Please search up any lyrics, artists, or song titles you wish to find!</strong>
-            <div class="field" style="padding-left: 500px; padding-right: 500px;">
+            <h1 class="title is-1" style="color: rgb(32, 129, 185); font-size: 5em;">Musix Lyrics</h1>
+            <strong style="color: rgb(32, 129, 185); font-size: 1.3em;">Welcome to the Musix Lyrics! Please search up any lyrics, artists, or song titles you wish to find!</strong>
+            <div class="field" style="position: relative;">
               <div class="control">
-                <form class="search-form" onsubmit="return false">
+                <form class="search-form" onsubmit="return false" style="text-align: center;">
                   <div class="form-group"> 
-                    <input type="search" placeholder="Find music here!" name="q" class="search-input input" id="search" autofocus>
+                    <input type="search" placeholder="Find music here!" name="q" class="search-input input" id="search" autofocus style="align-items: center; max-width: 200px;">
+                    <button class="btn-srch; button is-link" onclick="checkRadio()">Search</button>
+                    <button class="btn-clear; button is-link" onclick="resetPage()">Clear Results</button>
                   </div>
                   <div class="form-group">
                     <input type="radio" name="search" value="artist" id="ArtistRadioButton" checked>Artist
                     <input type="radio" name="search" value="song" id="songRadioButton">Song
                   </div>
-                  <div class="form-group">
-                    <div class="level-right" style="padding-right: 350px;">
-                      <button class="btn-srch" onclick="checkRadio()">Search</button>
-                    <button class="btn-clear" onclick="resetPage()">Clear Results</button>
+                  <div class="form-group" style="max-width: 200px;">
+                    <div class="level-right" style="align-items: center; max-width: 100%; justify-content: center; float: right;">
+                    </br>
                     </div>
-                  </div>
-                 
-                 </form> 
-                </form >
+                  </div>                 
+                </form> 
                 <div class="row">
                   <div class="col-md-12">
                     <div id="video">
@@ -49,8 +48,8 @@
           <div class="row" style="background: url(./images/Musix.jpg) fixed center;">
             <table id="back-button" class="table results"></table>
         </div>
-        <div class="row">
-            <table id="results" class="table results" style="background: url(./images/Musix.jpg) fixed center; text-emphasis-color: purple;">
+        <div class="row" style="text-align: center; align-items: center; padding-left: 550px; padding-right: 550px;">
+            <table id="results" class="table results" style="background: url(./images/Musix.jpg) fixed center; text-emphasis-color: purple; text-align: center; font-size: 20px; color: rgb(0, 255, 157); text-shadow: black;">
             </table>
         </div>
         </section>
@@ -63,7 +62,7 @@
         <div class="notification" style="background: url(./images/Musix.jpg) fixed center;">
           <div class="box" style="background: url(./images/Musix.jpg) fixed center;">
             <div class="content has-text-centered" style="background: url(./images/Musix.jpg) fixed center;">         
-              <h1 class="title is-5" style="color: purple;">Copyright 2021 Evan, Albert, Kevin, and Gabriel!!</h1>
+              <h1 class="title is-3" style="color: rgb(17, 72, 104);">Copyright 2021 Evan, Albert, Kevin, and Gabriel!!</h1>
             </div>
           </div>
         </div>
