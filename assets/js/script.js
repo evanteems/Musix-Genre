@@ -22,6 +22,7 @@ function checkRadio() {
 function resetPage() {
     ResultsSection.innerHTML = "";
     BackButton.innerHTML = "";
+    display.innerHTML= "";
 }
 
 //if 'song' radio button is selected
@@ -367,6 +368,7 @@ function videoSearch(video,maxVideo) {
     })
 }   
 
-// btn-clear.addEventListener('click', ()=>{
-//  display.parentNode.removeChild(display);
-// })
+ 
+     
+    
+ 
