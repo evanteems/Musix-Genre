@@ -3,7 +3,7 @@ let SongID;
 let ResultsSection = document.getElementById('results');
 let BackButton = document.getElementById('back-button');
 let api_Key = "AIzaSyCdEPu6GK83lhXpfTuFAJtGyAdH0C23r-M";
-let display= "";
+let display = document.getElementById('video');
 
 
 //runs when the user clicks on the search button
@@ -29,7 +29,7 @@ function getSong() {
     resetPage();
     $.ajax({type: "GET",
             data: {
-                apikey: "d246a1705459f6af7bcc9ca194674583",
+                apikey: "afba597c516d1e26064dfec9f0e8c81b",
                 q_track: SearchTerms, //searches by song name
                 format: "jsonp",
                 callback: "jsonp_callback",
@@ -78,24 +78,21 @@ function getSong() {
                 
             },
         }
-    );
-
-
-        
+    );  
 }
 
-//If 'artist' radio button is selected:
+//If 'artist' radio button is selected
 function getArtist() {
     resetPage();
     $.ajax({
             type: "GET",
             data: {
-                apikey: "d246a1705459f6af7bcc9ca194674583",
-                q_artist: SearchTerms, //queries by artist name
+                apikey: "afba597c516d1e26064dfec9f0e8c81b",
+                q_artist: SearchTerms, //searches by artist name
                 format: "jsonp",
                 callback: "jsonp_callback",
                 page_size: 50, //returns the top 50 results
-                s_artist_rating: "DESC", //sorted by popularity of artist
+                s_artist_rating: "DESC", //sorted by popularity of artist in order 
 
             },
 
@@ -108,7 +105,7 @@ function getArtist() {
                 console.log(data);
                 ResultsSection.innerHTML += `<thead>
                                                 <tr>
-                                                  <th>Artist Name</th>
+                                                  <th>Artists</th>
                                                   <th>Albums</th>
                                                 </tr>
                                              </thead>`;
@@ -124,15 +121,15 @@ function getArtist() {
 
                 });
                 if (artistResults.length === 0) {
-                    resetPage(); //necessary to clear the table header already printed above.
+                    resetPage(); //clears the table header 
                     ResultsSection.innerHTML += `<thead>
                                                     <tr>
-                                                        <th>A problem has occurred</th>
+                                                        <th>Problem has occurred</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td>no results were found</td>
+                                                        <td>no results found</td>
                                                     </tr>
                                                 </tbody>`;
                 }
@@ -145,13 +142,13 @@ function getArtist() {
     
 }
 
+
 //gets lyrics when song is selected
 function getLyrics(SongID, goBack, artist_name, track_name) {
     let youSearch = (artist_name + track_name );
     videoSearch(youSearch,1)
     resetPage();
     let songName;
-
     function createBackButton() {
         if (goBack == 'getSong') {
             BackButton.innerHTML += '<button class="btn-srch" onclick="getSong()">Go Back</button>';
@@ -164,7 +161,7 @@ function getLyrics(SongID, goBack, artist_name, track_name) {
     $.ajax({
         type: "GET",
         data: {
-            apikey: "d246a1705459f6af7bcc9ca194674583",
+            apikey: "afba597c516d1e26064dfec9f0e8c81b",
             track_id: SongID, //ID of the song
             format: "jsonp",
             callback: "jsonp_callback",
@@ -181,7 +178,7 @@ function getLyrics(SongID, goBack, artist_name, track_name) {
             $.ajax({
                 type: "GET",
                 data: {
-                    apikey: "d246a1705459f6af7bcc9ca194674583",
+                    apikey: "afba597c516d1e26064dfec9f0e8c81b",
                     track_id: SongID, //ID of the song
                     format: "jsonp",
                     callback: "jsonp_callback",
@@ -195,7 +192,7 @@ function getLyrics(SongID, goBack, artist_name, track_name) {
                     try { //checks to make sure there are lyrics to return
                         var lyricResults = data.message.body.lyrics.lyrics_body;
                     }
-                    catch (error) { //if there are no lyrics to return, an error is printed and the rest of the function is aborted
+                    catch (error) { //if there are no lyrics to return, an error displays
                         ResultsSection.innerHTML += `<thead>
                                                 <tr>
                                                   <th>Problem occurred</th>
@@ -242,22 +239,19 @@ function getLyrics(SongID, goBack, artist_name, track_name) {
     });
 }
 
-
-
-
-//If user opts to view an artist's albums via the getArtist function:
+//If user opts to view an artist's albums via the getArtist function
 function getAlbumList(artistID) {
-    window['currentArtist'] = artistID; //makes the artistID available to use with the Go Back button on the track list results (from getSongList)(assistance from mentor CZ on this line)
+    window['currentArtist'] = artistID; //makes the artistID available to use with the Go Back button so page can display artists again
     resetPage();
     $.ajax({
             type: "GET",
             data: {
-                apikey: "d246a1705459f6af7bcc9ca194674583",
+                apikey: "afba597c516d1e26064dfec9f0e8c81b",
                 artist_id: artistID, //unique ID of the specified artist
                 format: "jsonp",
                 callback: "jsonp_callback",
-                page_size: 100, //returns the top 100 results
-                g_album_name: 1 //groups albums of the same name into one result
+                page_size: 50, //returns the top 50 results
+                g_album_name: 1 //groups albums of the same artist name into one result
 
             },
             url: "https://api.musixmatch.com/ws/1.1/artist.albums.get",
@@ -269,7 +263,7 @@ function getAlbumList(artistID) {
                 BackButton.innerHTML += `<button class="btn-srch" onclick="getArtist()">Go Back</button>`;
                 ResultsSection.innerHTML += `<thead>
                                                 <tr>
-                                                  <th>Album Name</th>
+                                                  <th>Album</th>
                                                   <th>Track List</th>
                                                 </tr>
                                             </thead>`;
@@ -284,7 +278,7 @@ function getAlbumList(artistID) {
                                                 </tbody>`;
                 });
                 if (albumList.length === 0) {
-                    resetPage(); //necessary to clear the table header already printed above.
+                    resetPage(); //necessary to clear the table header 
                     BackButton.innerHTML += `<button class="btn-srch" onclick="getArtist()">Go Back</button>`;
                     ResultsSection.innerHTML += `<thead>
                                                     <tr>
@@ -298,23 +292,20 @@ function getAlbumList(artistID) {
                                                 </tbody>`;
                 }
 
-
-
-
             }
         }
 
     );
 }
 
-//If user opts to view an album's tracks via the getAlbumList function:
+//If user opts to view an album's tracks via the getAlbumList function
 function getSongList(albumID) {
-    window['currentAlbum'] = albumID; //makes the album ID available to use for the Go Back button on the lyrics page (getLyrics)
+    window['currentAlbum'] = albumID; //makes the album ID available to use for the Go Back button on the lyrics page 
     resetPage();
     $.ajax({
             type: "GET",
             data: {
-                apikey: "d246a1705459f6af7bcc9ca194674583",
+                apikey: "afba597c516d1e26064dfec9f0e8c81b",
                 album_id: albumID, //unique ID of the specified album
                 format: "jsonp",
                 callback: "jsonp_callback",
@@ -330,7 +321,7 @@ function getSongList(albumID) {
                 BackButton.innerHTML += '<button class="btn-srch" onclick="getAlbumList(' + window['currentArtist'] + ')">Go Back</button>';
                 ResultsSection.innerHTML += `<thead>
                                                 <tr>
-                                                  <th>Track Name</th>
+                                                  <th>Tracks</th>
                                                   <th>Lyrics</th>
                                                 </tr>
                                              </thead>`;
@@ -346,16 +337,16 @@ function getSongList(albumID) {
                                                 </tbody>`;
                 });
                 if (songResults.length === 0) {
-                    resetPage(); //necessary to clear the table header already printed above.
+                    resetPage(); //necessary to clear the table header 
                     BackButton.innerHTML += '<button class="btn-srch" onclick="getAlbumList(' + window['currentArtist'] + ')">Go Back</button>';
                     ResultsSection.innerHTML += `<thead>
                                                     <tr>
-                                                        <th>A problem has occurred</th>
+                                                        <th>Problem has occurred</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td>no results were found</td>
+                                                        <td>No results found</td>
                                                     </tr>
                                                 </tbody>`;
                 }
@@ -365,11 +356,6 @@ function getSongList(albumID) {
 
     );
 }
-
-
-    // let youSearch = (item.track.artist_name + item.track.track_id);
-    // videoSearch(youSearch,1)
-
 
 function videoSearch(video,maxVideo) {
     $.get("https://www.googleapis.com/youtube/v3/search?key="+api_Key+"&type=video&part=snippet&maxResults="+maxVideo+"&q="+video,function(data){
@@ -381,25 +367,6 @@ function videoSearch(video,maxVideo) {
     })
 }   
 
-
-
-
-
-
-// $(document).ready(function () {
-//     $("#form").submit(function (event) {
-//         event.preventDefault();
-//         let youSearch = $("#search").val();
-//         videoSearch(apiKey, youSearch,2)
-//     })
-
-//     function videoSearch(key,video,maxVideo) {
-//         $.get("https://www.googleapis.com/youtube/v3/search?key="+key+"&type=video&part=snippet&maxResults="+maxVideo+"&q="+video,function(data){
-            
-//             data.items.forEach(item => {
-//                 video=`<iframe width="560" height="315" src="https://www.youtube.com/embed/${item.id.videoId}" frameborder="0" allowfullscreen></iframe>`
-//             });
-//             $("#video").append(video);
-//         })
-//     }
+// btn-clear.addEventListener('click', ()=>{
+//  display.parentNode.removeChild(display);
 // })
