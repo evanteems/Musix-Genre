@@ -1,15 +1,16 @@
-let SearchTerms;
-let SongID;
-let ResultsSection = document.getElementById('results');
-let BackButton = document.getElementById('back-button');
-let api_Key = "AIzaSyCdEPu6GK83lhXpfTuFAJtGyAdH0C23r-M";
-let display = document.getElementById('video');
+let SearchTerms;//creates dynamic search variable
+let SongID;//Variable to call unique track ID used by MusixMatch 
+let ResultsSection = document.getElementById('results');//links variable to results table
+let BackButton = document.getElementById('back-button');//links variable to back-button table
+let api_Key = "AIzaSyCdEPu6GK83lhXpfTuFAJtGyAdH0C23r-M";//Youtube API
+let display = document.getElementById('video');//links variable to youtube video id
 
 
 //runs when the user clicks on the search button
 function checkRadio() {
+    //links search variable to search id 
     SearchTerms = document.getElementById("search").value;
-
+    //determines which filter to search by
     if ($("#ArtistRadioButton").is(":checked")) {
         getArtist();
     }
@@ -18,7 +19,7 @@ function checkRadio() {
     }
 }
 
-//resets the page when results are displayed.
+//resets the results
 function resetPage() {
     ResultsSection.innerHTML = "";
     BackButton.innerHTML = "";
@@ -30,7 +31,8 @@ function getSong() {
     resetPage();
     $.ajax({type: "GET",
             data: {
-                apikey: "afba597c516d1e26064dfec9f0e8c81b",
+                //calls parameters
+                apikey: "afba597c516d1e26064dfec9f0e8c81b",//MusixMatch API
                 q_track: SearchTerms, //searches by song name
                 format: "jsonp",
                 callback: "jsonp_callback",
@@ -43,7 +45,7 @@ function getSong() {
             jsonpCallback: 'jsonp_callback',
             contentType: 'application/json',
             success: function(data) {
-                let songResults = data.message.body.track_list;
+                let songResults = data.message.body.track_list;//gathers song list and places it in body
                 console.log(data);
                 ResultsSection.innerHTML += `<thead>
                                                 <tr>
@@ -52,13 +54,14 @@ function getSong() {
                                                   <th>Lyrics</th>
                                                 </tr>
                                              </thead>`;
+                //dynamically creates table of results                             
                 songResults.forEach(function(item) {
                     ResultsSection.innerHTML += `<tbody>
                                                     <tr>
                                                         <td>${item.track.track_name}</td>
                                                         <td>${item.track.artist_name}</td>
                                                         <td>
-                                                            <button class="btn-result" onclick="getLyrics(${item.track.track_id},'getSong','${item.track.artist_name}','${item.track.track_name}')">Click here for lyrics/Youtube</button>
+                                                            <button class="btn-result" onclick="getLyrics(${item.track.track_id},'getSong','${item.track.artist_name}','${item.track.track_name}')">Click here for lyrics/YouTube</button>
                                                         </td>
                                                     </tr>
                                                 </tbody>`;
@@ -67,14 +70,11 @@ function getSong() {
                     resetPage(); //clears the table header above
                     ResultsSection.innerHTML += `<thead>
                                                     <tr>
-                                                        <th>Problem has occurred</th>
+                                                        <th>No songs found</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>No results found</td>
-                                                    </tr>
-                                                </tbody>`;
+                                                <tbody>`;
+                                                    
                 }
                 
             },
@@ -82,7 +82,7 @@ function getSong() {
     );  
 }
 
-//If 'artist' radio button is selected
+//if 'artist' radio button is selected
 function getArtist() {
     resetPage();
     $.ajax({
@@ -102,7 +102,7 @@ function getArtist() {
             jsonpCallback: 'jsonp_callback',
             contentType: 'application/json',
             success: function(data) {
-                let artistResults = data.message.body.artist_list;
+                let artistResults = data.message.body.artist_list;//gathers artist list and places it in body
                 console.log(data);
                 ResultsSection.innerHTML += `<thead>
                                                 <tr>
@@ -125,14 +125,10 @@ function getArtist() {
                     resetPage(); //clears the table header 
                     ResultsSection.innerHTML += `<thead>
                                                     <tr>
-                                                        <th>Problem has occurred</th>
+                                                        <th>No artists found</th>
                                                     </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>no results found</td>
-                                                    </tr>
-                                                </tbody>`;
+                                                </thead>`;
+                                            
                 }
 
             },
@@ -148,6 +144,7 @@ function getArtist() {
 function getLyrics(SongID, goBack, artist_name, track_name) {
     let youSearch = (artist_name + track_name );
     videoSearch(youSearch,1)
+    localStorage.setItem(artist_name, track_name);
     resetPage();
     let songName;
     function createBackButton() {
@@ -196,18 +193,13 @@ function getLyrics(SongID, goBack, artist_name, track_name) {
                     catch (error) { //if there are no lyrics to return, an error displays
                         ResultsSection.innerHTML += `<thead>
                                                 <tr>
-                                                  <th>Problem occurred</th>
+                                                  <th>No lyrics found</th>
                                                 </tr>
-                                             </thead>
-                                             <tbody>
-                                                <tr>
-                                                    <td>No lyrics available</td>
-                                                </tr>
-                                             </tbody>`;
+                                             </thead>`;
                         return;
 
                     }
-                    //lyrics are printed into the results div.
+                    //lyrics are printed into the results div
                     ResultsSection.innerHTML += `<thead> 
                                                 <tr>
                                                   <th>${songName}</th>
@@ -224,14 +216,9 @@ function getLyrics(SongID, goBack, artist_name, track_name) {
                         createBackButton();
                         ResultsSection.innerHTML += `<thead>
                                                 <tr>
-                                                  <th>Problem occurred</th>
+                                                  <th>No lyrics found</th>
                                                 </tr>
-                                             </thead>
-                                             <tbody>
-                                                <tr>
-                                                    <td>No lyrics available</td>
-                                                </tr>
-                                             </tbody>`;
+                                             </thead>`;
                         return;
                     }
                 }
@@ -240,7 +227,7 @@ function getLyrics(SongID, goBack, artist_name, track_name) {
     });
 }
 
-//If user opts to view an artist's albums via the getArtist function
+//if user clicks to view an artist's albums by getArtist 
 function getAlbumList(artistID) {
     window['currentArtist'] = artistID; //makes the artistID available to use with the Go Back button so page can display artists again
     resetPage();
@@ -248,7 +235,7 @@ function getAlbumList(artistID) {
             type: "GET",
             data: {
                 apikey: "afba597c516d1e26064dfec9f0e8c81b",
-                artist_id: artistID, //unique ID of the specified artist
+                artist_id: artistID, //ID of the specified artist
                 format: "jsonp",
                 callback: "jsonp_callback",
                 page_size: 50, //returns the top 50 results
@@ -265,7 +252,7 @@ function getAlbumList(artistID) {
                 ResultsSection.innerHTML += `<thead>
                                                 <tr>
                                                   <th>Album</th>
-                                                  <th>Track List</th>
+                                                  <th>Songs</th>
                                                 </tr>
                                             </thead>`;
                 albumList.forEach(function(item) {
@@ -273,7 +260,7 @@ function getAlbumList(artistID) {
                                                     <tr>
                                                         <td>${item.album.album_name}</td>
                                                         <td>
-                                                            <button class="btn-result" onclick="getSongList(${item.album.album_id})">Click here for a list of tracks</button>
+                                                            <button class="btn-result" onclick="getSongList(${item.album.album_id})">Click here for a list of songs</button>
                                                         </td>
                                                     </tr>
                                                 </tbody>`;
@@ -283,14 +270,9 @@ function getAlbumList(artistID) {
                     BackButton.innerHTML += `<button class="btn-srch" onclick="getArtist()">Go Back</button>`;
                     ResultsSection.innerHTML += `<thead>
                                                     <tr>
-                                                        <th>A problem has occurred</th>
+                                                        <th>No albumss found</th>
                                                     </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>no results were found</td>
-                                                    </tr>
-                                                </tbody>`;
+                                                </thead>`;
                 }
 
             }
@@ -299,7 +281,7 @@ function getAlbumList(artistID) {
     );
 }
 
-//If user opts to view an album's tracks via the getAlbumList function
+//if user clicks to view an album's tracks by getAlbumList
 function getSongList(albumID) {
     window['currentAlbum'] = albumID; //makes the album ID available to use for the Go Back button on the lyrics page 
     resetPage();
@@ -307,7 +289,7 @@ function getSongList(albumID) {
             type: "GET",
             data: {
                 apikey: "afba597c516d1e26064dfec9f0e8c81b",
-                album_id: albumID, //unique ID of the specified album
+                album_id: albumID, //ID of the specified album
                 format: "jsonp",
                 callback: "jsonp_callback",
                 page_size: 50, //returns the top 50 results
@@ -322,7 +304,7 @@ function getSongList(albumID) {
                 BackButton.innerHTML += '<button class="btn-srch" onclick="getAlbumList(' + window['currentArtist'] + ')">Go Back</button>';
                 ResultsSection.innerHTML += `<thead>
                                                 <tr>
-                                                  <th>Tracks</th>
+                                                  <th>Songs</th>
                                                   <th>Lyrics</th>
                                                 </tr>
                                              </thead>`;
@@ -332,7 +314,7 @@ function getSongList(albumID) {
                                                         <td>${item.track.track_name}</td>
                                                         <td>${item.track.artist_name}</td>
                                                         <td>
-                                                            <button class="btn-result" onclick="getLyrics(${item.track.track_id}, 'getSongList','${item.track.artist_name}','${item.track.track_name}')">Click here for lyrics</button>
+                                                            <button class="btn-result" onclick="getLyrics(${item.track.track_id}, 'getSongList','${item.track.artist_name}','${item.track.track_name}')">Click here for lyrics/YouTube</button>
                                                         </td>
                                                     </tr>
                                                 </tbody>`;
@@ -342,14 +324,9 @@ function getSongList(albumID) {
                     BackButton.innerHTML += '<button class="btn-srch" onclick="getAlbumList(' + window['currentArtist'] + ')">Go Back</button>';
                     ResultsSection.innerHTML += `<thead>
                                                     <tr>
-                                                        <th>Problem has occurred</th>
+                                                        <th>No songs found</th>
                                                     </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>No results found</td>
-                                                    </tr>
-                                                </tbody>`;
+                                                </thead>`;
                 }
 
             }
@@ -358,6 +335,7 @@ function getSongList(albumID) {
     );
 }
 
+//generates embedded YouTube link
 function videoSearch(video,maxVideo) {
     $.get("https://www.googleapis.com/youtube/v3/search?key="+api_Key+"&type=video&part=snippet&maxResults="+maxVideo+"&q="+video,function(data){
         
