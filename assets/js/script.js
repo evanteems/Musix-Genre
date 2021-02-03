@@ -149,6 +149,7 @@ function getArtist() {
 function getLyrics(SongID, goBack, artist_name, track_name) {
     let youSearch = (artist_name + track_name );
     videoSearch(youSearch,1)
+    localStorage.setItem(artist_name, track_name);
     resetPage();
     let songName;
 
