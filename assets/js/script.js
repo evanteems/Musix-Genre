@@ -145,6 +145,7 @@ function getLyrics(SongID, goBack, artist_name, track_name) {
     let youSearch = (artist_name + track_name );
     videoSearch(youSearch,1)
     localStorage.setItem(artist_name, track_name);
+    document.getElementById("search").innerHTML = localStorage.getItem(artist_name);
     resetPage();
     let songName;
     function createBackButton() {
